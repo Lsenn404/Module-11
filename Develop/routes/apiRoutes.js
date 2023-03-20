@@ -9,7 +9,8 @@ router.get('/', (req, res)=> {
 
 router.post('/', (req, res)=> {
     console.log('req.body',req.body);
-    const newNote = req.body;
+    const { title, text } = req.body;
+    newNote = { title, text, id: db.length + 1 };
     console.log("newnote",newNote)
     console.log('db',db)
     db.push(newNote);
