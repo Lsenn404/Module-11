@@ -1,11 +1,24 @@
 const router = require("express").Router();
+const db = require('../db/db.json');
+const fs = require ('fs');
 
 router.get('/', (req, res)=> {
-    res.json(`GOT YOUR ${req.method} REQUEST`)
+    console.log('GET REQUEST');
+    res.json(db);
 });
 
 router.post('/', (req, res)=> {
-    res.json(`GOT YOUR ${req.method} REQUEST`)
+    console.log('req.body',req.body);
+    const newNote = req.body;
+    console.log("newnote",newNote)
+    console.log('db',db)
+    db.push(newNote);
+    const newDb = JSON.stringify(db);
+    fs.writeFile('./db/db.json', newDb, (err) => {
+        if (err) throw err;
+        console.log('The file has been saved!');
+    });
+    res.json(newDb);
 });
 
 
